@@ -15,5 +15,5 @@ lockdown();
 const c = new Compartment();
 
 c.evaluate(
-  readFileSync('./main.cjs', 'utf8')
+  readFileSync('./snarkjs.cjs', 'utf8')
 )
