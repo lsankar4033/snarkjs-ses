@@ -3877,7 +3877,7 @@ async function wtnsDebug(input, wasmFileName, wtnsFileName, symName, options, lo
     if (options.get) {
         if (!sym) sym = await loadSymbols(symName);
         wcOps.logGetSignal= function(varIdx, value) {
-            if (logger) logger.info("GET " + sym.labelIdx2Name[varIdx] + " --> " + value.toString());
+            if (logger) logger.info("GET " + sym.labelIdx2Name[varIdx] + " --" + "> " + value.toString());
         };
     }
     if (options.trigger) {
