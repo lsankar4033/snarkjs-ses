@@ -1,5 +1,6 @@
 'use strict';
 
+let exports = {};
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var binFileUtils = require('@iden3/binfileutils');
