@@ -1683,13 +1683,13 @@ Script.prototype.runInContext = function (context) {
     if (!(context instanceof Context)) {
         throw new TypeError("needs a 'context' argument.");
     }
-    
+
     var iframe = document.createElement('iframe');
     if (!iframe.style) iframe.style = {};
     iframe.style.display = 'none';
-    
+
     document.body.appendChild(iframe);
-    
+
     var win = iframe.contentWindow;
     var wEval = win.eval, wExecScript = win.execScript;
 
@@ -1698,7 +1698,7 @@ Script.prototype.runInContext = function (context) {
         wExecScript.call(win, 'null');
         wEval = win.eval;
     }
-    
+
     forEach(Object_keys(context), function (key) {
         win[key] = context[key];
     });
@@ -1707,11 +1707,11 @@ Script.prototype.runInContext = function (context) {
             win[key] = context[key];
         }
     });
-    
+
     var winKeys = Object_keys(win);
 
     var res = wEval.call(win, this.code);
-    
+
     forEach(Object_keys(win), function (key) {
         // Avoid copying circular objects like `top` and `window` by only
         // updating existing context properties or new properties in the `win`
@@ -1726,14 +1726,14 @@ Script.prototype.runInContext = function (context) {
             defineProp(context, key, win[key]);
         }
     });
-    
+
     document.body.removeChild(iframe);
-    
+
     return res;
 };
 
 Script.prototype.runInThisContext = function () {
-    return eval(this.code); // maybe...
+    return (1, eval)(this.code); // maybe...
 };
 
 Script.prototype.runInNewContext = function (context) {
@@ -38198,7 +38198,7 @@ class PolField {
         return v;
     }
 
-    eval(p,x) {
+    eval1(p,x) {
         const F = this.F;
         if (p.length == 0) return F.zero;
         const m = this._next2Power(p.length);
@@ -38229,7 +38229,7 @@ class PolField {
             let mpol = this.ruffini(roots, points[i][0]);
             const factor =
                 this.F.mul(
-                    this.F.inv(this.eval(mpol, points[i][0])),
+                    this.F.inv(this.eval1(mpol, points[i][0])),
                     points[i][1]);
             mpol = this.mulScalar(mpol, factor);
             sum = this.add(sum, mpol);
@@ -46307,7 +46307,7 @@ class WitnessCalculatorCircom2 {
 
         this.sanityCheck = sanityCheck;
     }
-    
+
     circom_version() {
         return this.instance.exports.getVersion();
     }
@@ -46363,7 +46363,7 @@ class WitnessCalculatorCircom2 {
         const buff32 = new Uint32Array(this.witnessSize*this.n32+this.n32+11);
         const buff = new  Uint8Array( buff32.buffer);
         await this._doCalculateWitness(input, sanityCheck);
-      
+
         //"wtns"
         buff[0] = "w".charCodeAt(0);
         buff[1] = "t".charCodeAt(0);
