@@ -35522,7 +35522,7 @@ _$browser_158.homedir = function () {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var _$Worker_50 = Worker;
+//var _$Worker_50 = Worker;
 var _$utils_29 = {};
 /*
     Copyright 2019 0KIMS association.
@@ -37390,7 +37390,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var bigInt__default = /*#__PURE__*/_interopDefaultLegacy(_$BigInteger_9);
 var crypto__default = /*#__PURE__*/_interopDefaultLegacy(_$cryptoBrowserify_107);
 var os__default = /*#__PURE__*/_interopDefaultLegacy(_$browser_158);
-var Worker__default = /*#__PURE__*/_interopDefaultLegacy(_$Worker_50);
+//var Worker__default = [>#__PURE__<]_interopDefaultLegacy(_$Worker_50);
 
 /* global BigInt */
 const hexLen = [ 0, 1, 2, 2, 3, 3, 3, 3, 4 ,4 ,4 ,4 ,4 ,4 ,4 ,4];
@@ -42397,7 +42397,7 @@ async function buildThreadManager(wasm, singleThread) {
     //    tm.pTmp1 = tm.alloc(curve.G2.F.n8*3);
 
 
-    if (singleThread) {
+    //if (singleThread) {
         tm.code = wasm.code;
         tm.taskManager = thread();
         await tm.taskManager([{
@@ -42406,49 +42406,51 @@ async function buildThreadManager(wasm, singleThread) {
             code: tm.code.slice()
         }]);
         tm.concurrency  = 1;
-    } else {
-        tm.workers = [];
-        tm.pendingDeferreds = [];
-        tm.working = [];
+    //}
 
-        let concurrency;
+    //else {
+        //tm.workers = [];
+        //tm.pendingDeferreds = [];
+        //tm.working = [];
 
-        if ((typeof(navigator) === "object") && navigator.hardwareConcurrency) {
-            concurrency = navigator.hardwareConcurrency;
-        } else {
-            concurrency = os__default["default"].cpus().length;
-        }
+        //let concurrency;
 
-        if(concurrency == 0){
-            concurrency = 2;
-        }
+        //if ((typeof(navigator) === "object") && navigator.hardwareConcurrency) {
+            //concurrency = navigator.hardwareConcurrency;
+        //} else {
+            //concurrency = os__default["default"].cpus().length;
+        //}
 
-        // Limit to 64 threads for memory reasons.
-        if (concurrency>64) concurrency=64;
-        tm.concurrency = concurrency;
+        //if(concurrency == 0){
+            //concurrency = 2;
+        //}
 
-        for (let i = 0; i<concurrency; i++) {
+        //// Limit to 64 threads for memory reasons.
+        //if (concurrency>64) concurrency=64;
+        //tm.concurrency = concurrency;
 
-            tm.workers[i] = new Worker__default["default"](workerSource);
+        //for (let i = 0; i<concurrency; i++) {
 
-            tm.workers[i].addEventListener("message", getOnMsg(i));
+            //tm.workers[i] = new Worker__default["default"](workerSource);
 
-            tm.working[i]=false;
-        }
+            //tm.workers[i].addEventListener("message", getOnMsg(i));
 
-        const initPromises = [];
-        for (let i=0; i<tm.workers.length;i++) {
-            const copyCode = wasm.code.slice();
-            initPromises.push(tm.postAction(i, [{
-                cmd: "INIT",
-                init: MEM_SIZE,
-                code: copyCode
-            }], [copyCode.buffer]));
-        }
+            //tm.working[i]=false;
+        //}
 
-        await Promise.all(initPromises);
+        //const initPromises = [];
+        //for (let i=0; i<tm.workers.length;i++) {
+            //const copyCode = wasm.code.slice();
+            //initPromises.push(tm.postAction(i, [{
+                //cmd: "INIT",
+                //init: MEM_SIZE,
+                //code: copyCode
+            //}], [copyCode.buffer]));
+        //}
 
-    }
+        //await Promise.all(initPromises);
+
+    //}
     return tm;
 
     function getOnMsg(i) {
